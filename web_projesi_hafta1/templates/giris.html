@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Giriş · Kampüs Panosu{% endblock %}
+{% block content %}
+<section class="kart form-kart">
+  <h1>Hesabına giriş yap</h1>
+  <form method="post">
+    <label for="eposta">E-posta</label><input id="eposta" name="eposta" type="email" required>
+    <label for="sifre">Şifre</label><input id="sifre" name="sifre" type="password" required>
+    <button>Giriş yap</button>
+  </form>
+  <p>Hesabın yok mu? <a href="{{ url_for('kayit') }}">Kayıt ol</a></p>
+</section>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Kayıt · Kampüs Panosu{% endblock %}
+{% block content %}
+<section class="kart form-kart">
+  <h1>Yeni hesap oluştur</h1>
+  <form method="post">
+    <label for="ad_soyad">Ad soyad</label><input id="ad_soyad" name="ad_soyad" maxlength="80" required>
+    <label for="eposta">E-posta</label><input id="eposta" name="eposta" type="email" maxlength="120" required>
+    <label for="sifre">Şifre (en az 6 karakter)</label><input id="sifre" name="sifre" type="password" minlength="6" required>
+    <button>Kayıt ol</button>
+  </form>
+</section>
+{% endblock %}

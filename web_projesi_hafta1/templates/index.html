@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Ana sayfa · Kampüs Panosu{% endblock %}
+{% block content %}
+<section class="hero">
+  <p class="etiket">ÖZGÜN PROJE FİKRİ</p>
+  <h1>Kampüsü birlikte güzelleştirelim.</h1>
+  <p>Öğrenciler kampüs yaşamını iyileştirecek fikirlerini paylaşır, yönetim de önerileri takip eder.</p>
+</section>
+{% if kullanici %}
+  <section class="kart">
+    <h2>Yeni bir öneri paylaş</h2>
+    <form method="post" action="{{ url_for('oneri_ekle') }}">
+      <label for="baslik">Öneri başlığı</label>
+      <input id="baslik" name="baslik" maxlength="120" required>
+      <label for="aciklama">Açıklama</label>
+      <textarea id="aciklama" name="aciklama" rows="4" required></textarea>
+      <button>Öneriyi gönder</button>
+    </form>
+  </section>
+  <section>
+    <h2>Önerilerim</h2>
+    {% if oneriler %}
+      <div class="liste">
+      {% for oneri in oneriler %}
+        <article class="kart">
+          <div class="satir"><h3>{{ oneri.baslik }}</h3><span class="durum">{{ oneri.durum }}</span></div>
+          <p>{{ oneri.aciklama }}</p>
+          <small>{{ oneri.olusturma_tarihi.strftime('%d.%m.%Y %H:%M') }}</small>
+        </article>
+      {% endfor %}
+      </div>
+    {% else %}<p>Henüz öneri göndermediniz.</p>{% endif %}
+  </section>
+{% else %}
+  <section class="kart bilgi">
+    <h2>Nasıl çalışır?</h2>
+    <p>Hesap oluşturun, kampüs önerinizi gönderin ve inceleme durumunu takip edin. Süper admin önerileri yönetir.</p>
+    <a class="dugme" href="{{ url_for('kayit') }}">Ücretsiz kayıt ol</a>
+  </section>
+{% endif %}
+{% endblock %}

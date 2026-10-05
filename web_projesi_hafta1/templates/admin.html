@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Admin paneli · Kampüs Panosu{% endblock %}
+{% block content %}
+<section class="hero kisa">
+  <p class="etiket">YÖNETİM</p><h1>Admin paneli</h1>
+  <p>Kayıtlı kullanıcı: <strong>{{ kullanici_sayisi }}</strong> · Toplam öneri: <strong>{{ oneriler|length }}</strong></p>
+</section>
+<section>
+  <h2>Gönderilen öneriler</h2>
+  {% if oneriler %}
+    <div class="liste">
+    {% for oneri in oneriler %}
+      <article class="kart">
+        <div class="satir"><h3>{{ oneri.baslik }}</h3><span class="durum">{{ oneri.durum }}</span></div>
+        <p>{{ oneri.aciklama }}</p>
+        <small>{{ oneri.sahip.ad_soyad }} ({{ oneri.sahip.eposta }}) · {{ oneri.olusturma_tarihi.strftime('%d.%m.%Y %H:%M') }}</small>
+        <form class="durum-form" method="post" action="{{ url_for('oneri_durum_degistir', oneri_id=oneri.id) }}">
+          <label for="durum-{{ oneri.id }}">Durumu güncelle</label>
+          <select id="durum-{{ oneri.id }}" name="durum">
+            {% for durum in ['Yeni', 'İnceleniyor', 'Tamamlandı'] %}<option {% if durum == oneri.durum %}selected{% endif %}>{{ durum }}</option>{% endfor %}
+          </select>
+          <button class="ikincil">Kaydet</button>
+        </form>
+      </article>
+    {% endfor %}
+    </div>
+  {% else %}<div class="kart"><p>Henüz öneri gönderilmedi.</p></div>{% endif %}
+</section>
+{% endblock %}
