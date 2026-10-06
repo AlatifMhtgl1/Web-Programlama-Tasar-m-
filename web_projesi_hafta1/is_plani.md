@@ -2,7 +2,7 @@
 
 Projemiz, dersin resmi takvimine ve gereksinimlerine uygun olarak aşağıdaki 5 temel iş paketine (WP) bölünmüştür.
 
-## 📅 İş Paketleri
+## İş Paketleri
 
 | İş Paketi | Kapsam ve Yapılacaklar | Hedeflenen Tarih |
 | :--- | :--- | :--- |
@@ -12,7 +12,7 @@ Projemiz, dersin resmi takvimine ve gereksinimlerine uygun olarak aşağıdaki 5
 | **WP4: Yayın (Deploy) ve Canlı Sunum** | Projenin backend ve frontend kısımlarının herkese açık bir sunucuda (Vercel, Render vb.) canlıya alınması. İlk proje sunumu için sistemin hazır hale getirilmesi. | 6. Hafta (10 Kasım'a kadar) |
 | **WP5: Test, Bug Hunting ve Final** | Projenin %100 tamamlanması. Karşılıklı test ekibinin bulduğu açıkların (Issue) tespit edilmesi ve bu hataların Pull Request (PR) yöntemiyle kapatılıp onaylanması. | 8. - 10. Hafta (8 Aralık'a kadar) |
 
-## 🚀 Ekstra Özellikler (Bonus) Planlaması
+## Ekstra Özellikler (Bonus) Planlaması
 Slaytlarda belirtilen ve projede yer alacak zorunlu ekstra özellikler[cite: 14]:
 1. **Rol Tabanlı Yetkilendirme:** Süper Admin ve Standart Kullanıcı (WP2'de uygulanacak)[cite: 14].
 2. **Görsel Yükleme:** Bulunan eşyaların fotoğraflarının sisteme yüklenmesi (WP3'te uygulanacak)[cite: 14].
