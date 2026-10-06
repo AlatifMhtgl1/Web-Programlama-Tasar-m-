@@ -35,7 +35,7 @@
 ## Teknik Gereksinimler
 
 - **Backend & Veritabanı:** C# .NET Core (MVC veya Web API), Entity Framework Core ve MS SQL Server kullanılacaktır.
-- **Frontend:** Arayüz HTML, CSS ve Bootstrap ile oluşturulacak, backend ile entegre edilecektir.
+- **Frontend:** Arayüz React ile oluşturulacak, backend ile entegre edilecektir.
 - **Kimlik Doğrulama:** Oturum yönetimi, giriş durumu ve yetkilendirme işlemleri ASP.NET Core Identity kütüphanesi ile izlenecektir.
 - **Güvenlik:** Parolalar ASP.NET Core Identity'nin yerleşik `PasswordHasher` algoritmasıyla güvenli hale getirilecektir.
 - **Mimari:** Proje kodları MVC mimarisine uygun olarak `Controllers`, `Models` ve `Views` klasörleri şeklinde modüler olarak yapılandırılacaktır.
