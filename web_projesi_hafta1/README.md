@@ -1,3 +1,9 @@
+# Web Tasarımı Dersi Projesi
+
+## Takım Üyeleri
+Abdüllatif Mehtioğlu - 240502067
+Hale Eslemnur Özdaşçı - 240502020
+
 # Kampüs İyileştirme Panosu — Hafta 1
 
 Kampüs yaşamını iyileştirecek öğrenci fikirlerinin veritabanına kaydedildiği ve yönetim tarafından takip edildiği küçük bir Flask web uygulaması. Proje, Web Tasarımı dersinin ilk hafta teslimi için anlaşılır tutulmuştur.
