@@ -1,90 +1,85 @@
-# Proje Gereksinimleri — İlk Hafta
+Proje Gereksinimleri — İlk Hafta
 
-## Proje Tanımı
+Proje Tanımı
+Adı: Kampüs Yemekhane ve Öğrenci Geri Bildirim Sistemi
+Türü: Veritabanı kullanan, oturum açmalı ve rol tabanlı web uygulaması.
+Amaç: Güncel yemekhane menülerini öğrencilerin kolayca görüntülemesini; yemekler için puan ve yorum göndermesini; yemekhane yönetiminin menüleri ve öğrenci geri bildirimlerini tek bir sistemden yönetmesini sağlamak.
+Kullanıcılar ve Yetkiler
+Rol	Yetkiler
+Öğrenci	Hesap oluşturma ve giriş/çıkış; günlük veya haftalık menüyü görüntüleme; yemeklere 1–5 arasında puan verme ve yorum yazma; kendi geri bildirimlerini görüntüleme.
+Yemekhane Yöneticisi	Menü ve yemek ekleme, düzenleme ve silme; öğrenci geri bildirimlerini ve yemeklerin puan ortalamalarını inceleme.
+Süper Admin	Kullanıcı ve rol yönetimi; sistem genelinde yönetim yetkileri.
 
-**Adı:** Kampüs Kayıp Eşya ve Buluntu Platformu  
-**Türü:** Veritabanı kullanan, oturum açmalı ve rol tabanlı web uygulaması.  
-**Amaç:** Kampüs içerisinde öğrencilerin ve personelin kaybettikleri veya buldukları eşyaları dijital bir panoda yönetmelerini sağlamak; bulunan eşyaların güvenli bir şekilde (kampüs güvenliği moderatörlüğünde) asıl sahiplerine ulaştırılacağı merkezi bir arşiv oluşturmak.
 
----
+Not: Kayıt formu yeni hesapları varsayılan olarak Öğrenci rolünde oluşturmalıdır. Yönetici ve süper admin hesapları yetkili şekilde tanımlanmalıdır.
 
-## Kullanıcılar ve Yetkiler
-
-| Rol | Yetkiler |
-| --- | --- |
-| **Kullanıcı** (Öğrenci/Personel) | Hesap oluşturma, giriş/çıkış, eşya ilanı (kayıp/buluntu) ekleme, kendi ilanlarını düzenleme ve durumunu (beklemede, onaylandı, vb.) görme. |
-| **Süper Admin** (Güvenlik) | Admin panelini görme, tüm ilanları inceleme, ilanları onaylama/reddetme/yayından kaldırma, sistemdeki eşya kategorilerini yönetme. |
-
-> **Not:** Kayıt formu yeni hesapları daima standart `Kullanıcı` rolünde oluşturur. Süper admin hesabı veritabanı kurulumunda başlangıç verisi (seed data) olarak eklenecektir.
-
----
-
-## İşlevsel Gereksinimler
-
-1. Uygulama, onaylanmış kayıp ve buluntu eşyaların listelendiği ana sayfayı göstermelidir.
-2. Ziyaretçi; ad, e-posta ve parola ile hesap oluşturabilmelidir.
-3. E-posta adresi benzersiz olmalıdır; parolalar veritabanında şifrelenmiş (hash) olarak saklanmalıdır.
+İşlevsel Gereksinimler
+1. Uygulama günlük ve haftalık yemekhane menülerini göstermelidir.
+2. Ziyaretçi ad, e-posta ve parola ile hesap oluşturabilmelidir.
+3. E-posta adresi benzersiz olmalı; parolalar veritabanında güvenli biçimde hash’lenmiş olarak saklanmalıdır.
 4. Kullanıcı doğru e-posta ve parola ile oturum açıp kapatabilmelidir.
-5. Giriş yapan kullanıcı; görsel, başlık, açıklama ve kategori seçerek "Kayıp" veya "Buldum" ilanı ekleyebilmelidir.
-6. Kullanıcı sadece kendi açtığı ilanları düzenleyebilmeli ve durumunu takip edebilmelidir.
-7. Süper admin, ayrı bir admin sayfasında bütün ilanları görüp durumlarını (Onaylandı/Reddedildi) güncelleyebilmelidir.
-8. Yetkisiz kullanıcılar admin sayfalarına erişememelidir.
+5. Öğrenciler menüdeki yemekleri görüntüleyebilmelidir.
+6. Öğrenciler yemeklere 1–5 arasında puan verebilmeli ve yorum yazabilmelidir.
+7. Öğrenciler kendi geri bildirimlerini görüntüleyebilmelidir.
+8. Yemekhane yöneticisi yemek ve menü kayıtlarını ekleyebilmeli, düzenleyebilmeli ve silebilmelidir.
+9. Yemekhane yöneticisi geri bildirimleri ve yemeklerin puan ortalamalarını inceleyebilmelidir.
+10. Yetkisiz kullanıcıların yönetim işlemleri backend tarafında engellenmelidir.
+Fonksiyonel Olmayan Gereksinimler
+- Güvenlik: Parolalar düz metin olarak tutulmamalı; rol ve yetki kontrolleri backend’de uygulanmalıdır.
+- Kullanılabilirlik: Arayüz sade, anlaşılır ve mobil cihazlarda kullanılabilir olmalıdır.
+- Performans: Menü ve geri bildirim ekranları makul sürede açılmalıdır.
+- Veri bütünlüğü: Zorunlu alanlar doğrulanmalı; puanlar 1–5 aralığında olmalıdır.
+- Bakım yapılabilirlik: React arayüzü, ASP.NET Core API ve veritabanı sorumlulukları ayrılmalıdır.
+İlk sürüm kapsamı dışında: Ödeme işlemleri, yemekhane kartı entegrasyonu ve canlı stok takibi.
+Teknik Gereksinimler
+- Backend: C# ve ASP.NET Core Web API
+- Frontend: React ve CSS
+- Veritabanı: Microsoft SQL Server (MSSQL)
+- Veri erişimi: Entity Framework Core
+- API iletişimi: React ile backend arasında JSON üzerinden iletişim
+- Kimlik doğrulama ve yetkilendirme: Oturum açma ve rol kontrolleri backend’de yürütülmelidir.
+Veri Modeli
+Kullanıcılar (Users)
+Alan	Tür	Kural
+id	Integer veya Guid	Birincil anahtar
+ad_soyad	String(80)	Boş olamaz
+eposta	String(120)	Boş olamaz, benzersiz
+sifre_hash	String(Max)	Boş olamaz, parola özeti
+rol	String(30)	Öğrenci, Yemekhane_Yoneticisi veya Super_Admin
 
----
 
-## Teknik Gereksinimler
+Yemekler (Foods)
+Alan	Tür	Kural
+id	Integer	Birincil anahtar
+ad	String(100)	Boş olamaz
+aciklama	Text	Opsiyonel
 
-- **Backend & Veritabanı:** C# .NET Core (MVC veya Web API), Entity Framework Core ve MS SQL Server kullanılacaktır.
-- **Frontend:** Arayüz React ile oluşturulacak, backend ile entegre edilecektir.
-- **Kimlik Doğrulama:** Oturum yönetimi, giriş durumu ve yetkilendirme işlemleri ASP.NET Core Identity kütüphanesi ile izlenecektir.
-- **Güvenlik:** Parolalar ASP.NET Core Identity'nin yerleşik `PasswordHasher` algoritmasıyla güvenli hale getirilecektir.
-- **Mimari:** Proje kodları MVC mimarisine uygun olarak `Controllers`, `Models` ve `Views` klasörleri şeklinde modüler olarak yapılandırılacaktır.
 
----
+Menüler (Menus)
+Alan	Tür	Kural
+id	Integer	Birincil anahtar
+tarih	DateTime	Menü tarihi
+ogun	String(30)	Öğün bilgisi
+yemek_id	Integer	Foods tablosuna yabancı anahtar
 
-## Veri Modeli
 
-### Kullanici (Users)
+Geri Bildirimler (Feedbacks)
+Alan	Tür	Kural
+id	Integer	Birincil anahtar
+yemek_id	Integer	Foods tablosuna yabancı anahtar
+kullanici_id	Integer veya Guid	Users tablosuna yabancı anahtar
+puan	Integer	1–5 arasında olmalı
+yorum	Text	Boş bırakılabilir
+olusturma_tarihi	DateTime	Geri bildirim zamanı
 
-| Alan | Tür | Kural |
-| --- | --- | --- |
-| `id` | Integer/Guid | Birincil anahtar |
-| `ad_soyad` | String(80) | Boş olamaz |
-| `eposta` | String(120) | Boş olamaz, benzersiz |
-| `sifre_hash` | String(Max) | Boş olamaz, parola özeti |
-| `rol` | String(20) | `Kullanıcı` veya `Super_Admin` |
 
-### Kategori (Categories)
+İlişkiler: Bir yemek farklı menülerde yer alabilir ve birden fazla geri bildirim alabilir. Bir kullanıcı birden fazla geri bildirim gönderebilir. Menü ile yemek arasındaki ilişki, bir menüde birden fazla yemek bulunmasını destekleyecek şekilde modellenmelidir.
 
-| Alan | Tür | Kural |
-| --- | --- | --- |
-| `id` | Integer | Birincil anahtar |
-| `ad` | String(50) | Boş olamaz (Örn: Elektronik, Kırtasiye, Kimlik) |
-
-### Ilan (Items)
-
-| Alan | Tür | Kural |
-| --- | --- | --- |
-| `id` | Integer | Birincil anahtar |
-| `baslik` | String(120) | Boş olamaz |
-| `aciklama` | Text | Boş olamaz |
-| `ilan_turu` | String(20) | `Kayıp` veya `Buluntu` |
-| `durum` | String(20) | `Beklemede`, `Onaylandı`, `Reddedildi` veya `Teslim Edildi` |
-| `gorsel_url` | String(255)| Opsiyonel |
-| `olusturma_tarihi` | DateTime | Oluşturulma zamanı |
-| `kategori_id` | Integer | Kategori tablosuna yabancı anahtar |
-| `kullanici_id` | Integer/Guid | Kullanici tablosuna yabancı anahtar |
-
-> **İlişki (Relation):** Bir kullanıcı birden fazla ilan açabilir (1-N). Bir kategoriye ait birden fazla ilan olabilir (1-N).
-
----
-
-## İlk Hafta Teslim Kontrol Listesi
-
-- [x] Proje fikri ve ilk teknik gereksinimler belirlendi.
-- [x] Projenin amacı ve okula faydası tanımlandı.
-- [x] Kullanıcı ve ilan veri modeli (tablo yapıları) tasarlandı.
-- [x] En az beş iş paketli haftalık proje planı (README içinde) hazırlandı.
-- [x] GitHub repository adresi açıldı ve dokümantasyon dosyaları eklendi.
-- [ ] .NET Core ve SQL Server iskeleti oluşturulup kodlar repoya yüklenecek (İlerleyen haftanın görevi).
-- [ ] Kimlik doğrulama, arayüz ve admin paneli kodlamasına başlanacak.
+İlk Hafta Teslim Kontrol Listesi
+- Proje fikri ve ilk teknik gereksinimler belirlendi.
+- Projenin amacı ve kampüse sağlayacağı fayda tanımlandı.
+- Kullanıcı, yemek, menü ve geri bildirim veri modelleri tasarlandı.
+- En az beş iş paketinden oluşan haftalık proje planı README dosyasına eklendi.
+- GitHub deposu açıldı ve dokümantasyon dosyaları eklendi.
+- .NET Core ve SQL Server iskeletinin oluşturulması sonraki haftanın görevi olarak planlandı.
+- Kimlik doğrulama, arayüz ve yönetim ekranlarının geliştirilmesi sonraki aşamalara planlandı.
