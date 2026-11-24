@@ -11,13 +11,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(ToNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")!)));
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("FrontendCors", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins((builder.Configuration["Cors:Origins"] ?? "http://localhost:5173")
+                  .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -61,10 +62,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
 app.UseCors("FrontendCors");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// Railway postgres://user:pass@host:port/db biçimini Npgsql bağlantı dizesine çevirir
+static string ToNpgsql(string cs)
+{
+    if (!cs.StartsWith("postgres://") && !cs.StartsWith("postgresql://")) return cs;
+    var u = new Uri(cs);
+    var ui = u.UserInfo.Split(':', 2);
+    return $"Host={u.Host};Port={u.Port};Database={u.AbsolutePath.TrimStart('/')};" +
+           $"Username={Uri.UnescapeDataString(ui[0])};Password={Uri.UnescapeDataString(ui[1])}";
+}
