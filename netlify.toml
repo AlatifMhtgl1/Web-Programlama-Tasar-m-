@@ -1,0 +1,12 @@
+[build]
+  # React (Vite) uygulamasının kaynak kodu "frontend" klasöründe bulunuyor.
+  base = "frontend"
+  command = "npm run build"
+  # "publish" yolu base klasörüne göredir: frontend/dist
+  publish = "dist"
+
+# React Router için tüm yolları index.html'e yönlendir (sayfa yenilemede 404 olmasın)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
