@@ -8,14 +8,16 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1) Veritabanı bağlantısı (SQL Server Express)
+// 1) Veritabanı bağlantısı (PostgreSQL)
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(ToNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")!)));
 
 // 2) Identity: kullanıcı ve rol yönetimi
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
-    options.Password.RequiredLength = 6;
+    options.Password.RequiredLength = 8;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
     options.User.RequireUniqueEmail = true;
 })
 .AddEntityFrameworkStores<AppDbContext>()
@@ -52,6 +54,12 @@ builder.Services.AddControllers()
 // 4) Yerleşik OpenAPI (JSON şeması, /openapi/v1.json)
 builder.Services.AddOpenApi();
 
+// CORS: izin verilen frontend adresleri (virgülle ayrılmış) Cors__Origins değişkeninden gelir
+var origins = (builder.Configuration["Cors:Origins"] ?? "http://localhost:5173")
+    .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+builder.Services.AddCors(o => o.AddDefaultPolicy(p =>
+    p.WithOrigins(origins).AllowAnyHeader().AllowAnyMethod()));
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -59,9 +67,24 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+using (var scope = app.Services.CreateScope())
+{
+    scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.EnsureCreated();
+}
+
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// Railway postgres://user:pass@host:port/db biçimini Npgsql bağlantı dizesine çevirir
+static string ToNpgsql(string cs)
+{
+    if (!cs.StartsWith("postgres://") && !cs.StartsWith("postgresql://")) return cs;
+    var u = new Uri(cs);
+    var ui = u.UserInfo.Split(':', 2);
+    return $"Host={u.Host};Port={u.Port};Database={u.AbsolutePath.TrimStart('/')};" +
+           $"Username={Uri.UnescapeDataString(ui[0])};Password={Uri.UnescapeDataString(ui[1])}";
+}
